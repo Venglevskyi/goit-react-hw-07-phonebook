@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { addContact, getContacts } from "./redux/contacts/contactsOperations";
-import { getLoadingContact } from "./redux/contacts/contactsSelectors";
+import { getContacts } from "./redux/contacts/contactsOperations";
+import {
+  getLoadingContact,
+  getErrorServer
+} from "./redux/contacts/contactsSelectors";
 
 import styles from "./base.module.css";
 
@@ -12,6 +15,7 @@ import ContactForm from "./Components/ContactForm/ContactForm";
 import Filter from "./Components/Filter/Filter";
 import ContactList from "./Components/ContactList/ContactList";
 import ThemeContext from "./context/ThemeContext";
+import ServerError from "./Components/ServerError/ServerError";
 
 class App extends Component {
   componentDidMount() {
@@ -19,25 +23,29 @@ class App extends Component {
   }
 
   render() {
-    const { isLoadingContact } = this.props;
+    const { isLoadingContact, errorServer } = this.props;
     return (
       <ThemeContext>
-        <Layout>
-          <Toggler />
-          <h1 className={styles.title}>Phonebook</h1>
-          <ContactForm />
-          <h2 className={styles.title}>Contacts</h2>
-          {!isLoadingContact && <Filter />}
-          {isLoadingContact && <Spiner />}
-          {!isLoadingContact && <ContactList />}
-        </Layout>
+        {errorServer && <ServerError />}
+        {!errorServer && (
+          <Layout>
+            <Toggler />
+            <h1 className={styles.title}>Phonebook</h1>
+            <ContactForm />
+            <h2 className={styles.title}>Contacts</h2>
+            {!isLoadingContact && <Filter />}
+            {isLoadingContact && <Spiner />}
+            {!isLoadingContact && <ContactList />}
+          </Layout>
+        )}
       </ThemeContext>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isLoadingContact: getLoadingContact(state)
+  isLoadingContact: getLoadingContact(state),
+  errorServer: getErrorServer(state)
 });
 
 const mapDispatchToProps = {

@@ -21,13 +21,13 @@ const onRemoveContact = (state, action) =>
   state.filter(({ id }) => id !== action.payload);
 
 const items = createReducer([], {
-  [getContactSuccess]: (state, action) => action.payload,
+  [getContactSuccess]: (_, action) => action.payload,
   [addContactSuccess]: onAddContact,
   [removeContactSuccess]: onRemoveContact
 });
 
 const filter = createReducer("", {
-  [formFilter]: (state, action) => action.payload
+  [formFilter]: (_, action) => action.payload
 });
 
 const loader = createReducer(false, {
@@ -42,4 +42,16 @@ const loader = createReducer(false, {
   [removeContactError]: () => false
 });
 
-export default combineReducers({ items, filter, loader });
+const error = createReducer(false, {
+  [getContactRequest]: () => false,
+  [getContactSuccess]: () => false,
+  [getContactError]: () => true,
+  [addContactRequest]: () => false,
+  [addContactSuccess]: () => false,
+  [addContactError]: () => true,
+  [removeContactRequest]: () => false,
+  [removeContactSuccess]: () => false,
+  [removeContactError]: () => true
+});
+
+export default combineReducers({ items, filter, loader, error });

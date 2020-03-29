@@ -22,7 +22,7 @@ const addContact = (name, number) => dispatch => {
   const option = {
     method: "POST",
     headers: {
-      Authorization: "fcee5017-48e3-48f8-92f4-2944800aeec4",
+      Authorization: "d83324e1-2e01-4247-ab19-c2671118966d",
       "Content-Type": "application/json"
     },
     body: JSON.stringify(contact)
@@ -40,7 +40,7 @@ const getContacts = () => dispatch => {
   const option = {
     method: "GET",
     headers: {
-      Authorization: "cb0a48ae-cb89-4ff5-80dd-fd9aa8ec6052"
+      Authorization: "d83324e1-2e01-4247-ab19-c2671118966d"
     }
   };
 
@@ -56,7 +56,7 @@ const removeContact = id => dispatch => {
   const option = {
     method: "DELETE",
     headers: {
-      Authorization: "cb0a48ae-cb89-4ff5-80dd-fd9aa8ec6052"
+      Authorization: "d83324e1-2e01-4247-ab19-c2671118966d"
     }
   };
 
