@@ -11,6 +11,12 @@ import {
 } from "./contactsActions";
 
 const baseUrl = "https://goit-phonebook-api.herokuapp.com/v1/contacts";
+const setHeaders = headers => {
+  return {
+    Authorization: "d83324e1-2e01-4247-ab19-c2671118966d",
+    ...headers
+  };
+};
 
 const addContact = (name, number) => dispatch => {
   dispatch(addContactRequest());
@@ -21,10 +27,7 @@ const addContact = (name, number) => dispatch => {
   };
   const option = {
     method: "POST",
-    headers: {
-      Authorization: "d83324e1-2e01-4247-ab19-c2671118966d",
-      "Content-Type": "application/json"
-    },
+    headers: setHeaders({ "Content-Type": "application/json" }),
     body: JSON.stringify(contact)
   };
 
@@ -39,9 +42,7 @@ const getContacts = () => dispatch => {
 
   const option = {
     method: "GET",
-    headers: {
-      Authorization: "d83324e1-2e01-4247-ab19-c2671118966d"
-    }
+    headers: setHeaders()
   };
 
   fetch(baseUrl, option)
@@ -55,12 +56,10 @@ const removeContact = id => dispatch => {
 
   const option = {
     method: "DELETE",
-    headers: {
-      Authorization: "d83324e1-2e01-4247-ab19-c2671118966d"
-    }
+    headers: setHeaders()
   };
 
-  fetch(baseUrl + `/${id}`, option)
+  fetch(`${baseUrl}/${id}`, option)
     .then(response => response.json())
     .then(() => dispatch(removeContactSuccess(id)))
     .catch(error => dispatch(removeContactError(error)));
